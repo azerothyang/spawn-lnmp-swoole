@@ -38,13 +38,11 @@ if res != 0:
 
 # 确定php版本
 version = raw_input('请输入您想安装的php版本(' + phpVersion + '/' + phpSubVersion + ') \n')
-if version == phpVersion:
+if version != phpSubVersion:
+    version = phpVersion
     url = 'http://cn2.php.net/distributions/' + phpVersion + '.tar.gz'
-elif version == phpVersionSub:
-    url = 'http://cn2.php.net/distributions/' + phpSubVersion + '.tar.gz'
 else:
-    print('您输入的版本号有误, 请输入:' + phpVersion + '或 ' + phpSubVersion)
-    sys.exit(1)
+    url = 'http://cn2.php.net/distributions/' + phpSubVersion + '.tar.gz'
 
 # 下载源码包, 先删除所有python先关的文件
 os.system('rm -rf php*')
@@ -144,10 +142,12 @@ if question == 'n':
     cmd = 0
     pass
 else:
-    swVerion = raw_input('请选择需要安装的swoole版本, (' + swooleSubVersion + '/' + swooleVersion + ') \n')
+    swVerion = raw_input('请选择需要安装的swoole版本, (' + swooleVersion + '/' + swooleSubVersion + ') \n')
+    if swVerion != swooleSubVersion:
+        swVerion = swooleVersion
     cmd = 'wget http://pecl.php.net/get/' + swVerion + '.tgz'
     os.system(cmd)
-    res = os.system('tar -zxvf ' + swooleVersion + '.tgz && cd ' + swVerion + ' && /usr/local/' + version + '/bin/phpize && ./configure --enable-sockets --enable-openssl --enable-mysqlnd --enable-async-mysql'
+    res = os.system('tar -zxvf ' + swVerion + '.tgz && cd ' + swVerion + ' && /usr/local/' + version + '/bin/phpize && ./configure --enable-sockets --enable-openssl --enable-mysqlnd --enable-async-mysql'
                     ' --with-php-config=/usr/local/' + version + '/bin/php-config && make && make install')
 
     # 启动php的swoole扩展
