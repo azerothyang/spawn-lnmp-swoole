@@ -12,6 +12,9 @@ swooleVersion = "swoole-2.1.0"
 swooleSubVersion = "swoole-1.10.1"
 freetypeVersion = "freetype-2.9"
 
+#目前phpmemcache 没有加Simple Authentication and Security Layer
+phpMemcached = "memcached-3.0.4.tgz"
+libMemcached = "libmemcached-1.0.18"
 
 
 # 先判断是否为root用户
@@ -136,6 +139,58 @@ if cmd != 0:
     else:
         print('php-redis扩展安装失败')
 
+
+
+# memcached
+question = raw_input('是否需要为您安装memcached? 请填写 y/n \n')
+if question == 'n':
+    cmd = 0
+    pass
+else:
+    cmd = "yum -y install memcached"
+    res = os.system(cmd)
+    cmd = "systemctl start memcached"
+    res = os.system(cmd)
+    # memcached
+    if res == 0:
+        print('memcached启动成功')
+    else:
+        print('memcached启动失败')
+
+
+# php-memcached
+question = raw_input('是否需要为您安装php-memcached扩展? 请填写 y/n \n')
+if question == 'n':
+    cmd = 0
+    pass
+else:
+    #安装libmemcached 作为 php连接memcached的因爱
+    cmd = "wget https://launchpad.net/libmemcached/1.0/1.0.18/+download/" + libMemcached + ".tar.gz"
+    res = os.system(cmd)
+    cmd = "tar -zxvf " + libMemcached + ".tar.gz"
+    os.system(cmd)
+    cmd = "cd " + libMemcached + " && ./configure --prefix=/usr/local/libmemcached --with-memcached && make && make install"
+    os.system(cmd)
+
+    #安装php-memcached依赖
+    cmd = 'wget http://pecl.php.net/get/' + phpMemcached + '.tgz'
+    res = os.system(cmd)
+    cmd = "tar -zxvf " + phpMemcached + ".tar.gz"
+    os.system(cmd)
+    os.system('cd ' + phpMemcached + ' && /usr/local/' + version + '/bin/phpize')
+    res = os.system(
+        'cd ' + phpMemcached + ' && ./configure --disable-memcached-sasl --with-libmemcached-dir=/usr/local/libmemcached --with-php-config=/usr/local/' + version + '/bin/php-config && make && make install')
+    # 启动php的memcached.so扩展
+    if res == 0:
+        document = open('/usr/local/' + version + '/etc/php.ini', 'a')
+        document.write('extension=memcached.so\n')
+        document.close()
+        print('php-memcached扩展安装成功')
+    else:
+        print('php-memcached扩展安装失败')
+
+
+
 # swoole
 question = raw_input('是否需要为您安装swoole扩展? 请填写 y/n \n')
 if question == 'n':
@@ -241,7 +296,8 @@ else:
     print ('防火墙已关闭')
 
 print ('所有安装完成\n' 
-      '您可以在/etc/nginx/下找到nginx配置文件\n' 
+      '如果您安装了memcached，您可以在/etc/sysconfig/memcached中找到memcached配置文件\n'   
+      '如果您安装了nginx，您可以在/etc/nginx/下找到nginx配置文件\n' 
       'php为您安装在/usr/local/' + version + '/下,配置文件则在/usr/local/' + version + '/etc/目录下\n' 
       """    __                                                       __       __           
    / /_  ____ __   _____     ____ _   ____ _____  ____  ____/ /  ____/ /___ ___  __
