@@ -11,6 +11,7 @@ phpSubVersion = "php-5.6.30"
 swooleVersion = "swoole-2.1.0"
 swooleSubVersion = "swoole-1.10.1"
 freetypeVersion = "freetype-2.9"
+inotifyVersion = "inotify-2.0.0"
 
 #目前phpmemcache 没有加Simple Authentication and Security Layer
 phpMemcached = "memcached-3.0.4.tgz"
@@ -220,7 +221,7 @@ if question == 'n':
     cmd = 0
     pass
 else:
-    cmd = 'wget http://pecl.php.net/get/' + mongodbVersion + '.tgz .tgz'
+    cmd = 'wget http://pecl.php.net/get/' + mongodbVersion + '.tgz'
 if cmd != 0:
     os.system(cmd)
     os.system('tar -zxvf ' + mongodbVersion + '.tgz')
@@ -235,6 +236,29 @@ if cmd != 0:
     else:
         print('php-mongodb扩展安装失败')
 # mongodb
+
+# inotify扩展
+question = raw_input('是否需要为您安装php-inotify扩展? 请填写 y/n \n')
+if question == 'n':
+    cmd = 0
+    pass
+else:
+    cmd = 'wget http://pecl.php.net/get/' + inotifyVersion + '.tgz'
+if cmd != 0:
+    os.system(cmd)
+    os.system('tar -zxvf ' + inotifyVersion + '.tgz')
+    res = os.system('cd ' + inotifyVersion + ' && /usr/local/' + version + '/bin/phpize && ./configure --with-php-config=/usr/local/' + version + '/bin/php-config && make && make install')
+
+    # 启动php的mongodb扩展
+    if res == 0:
+        document = open('/usr/local/' + version + '/etc/php.ini', 'a')
+        document.write('extension=inotify.so\n')
+        document.close()
+        print('php-inotify扩展安装成功')
+    else:
+        print('php-inotify扩展安装失败')
+# inotify
+
 question = raw_input('是否需要为您打开opcache? 请填写 y/n \n')
 if question == 'n':
     cmd = 0
