@@ -81,6 +81,14 @@ else:
     cmd = 'cd ' + version + '&& cp php.ini-production /usr/local/' + version + '/etc/php.ini'
 os.system(cmd)
 
+#复制php命令到主命令
+
+res = raw_input('php命令是否设置为全局?y/n \n')
+if res != 'n':
+    os.system("ln -s /usr/local/" + version + "/bin/php /usr/local/bin")
+    os.system("ln -s /usr/local/" + version + "/bin/php-config /usr/local/bin")
+    os.system("ln -s /usr/local/" + version + "/bin/phpize /usr/local/bin")
+
 question = raw_input('是否需要为您启动php-fpm, 默认启动? 请填写 y/n \n')
 if question == 'n':
     pass
