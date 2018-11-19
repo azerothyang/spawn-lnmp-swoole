@@ -34,7 +34,7 @@ cmd = "wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rp
 os.system(cmd)
 
 # 先安装php需要的依赖
-cmd = "yum -y install gcc libmcrypt libmcrypt-devel autoconf freetype gd jpegsrc libmcrypt libpng libpng-devel libjpeg libxml2 libxml2-devel zlib curl curl-devel openssl* libxml2 libxml2-devel openssl openssl-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel"
+cmd = "yum -y install gcc gcc-c++ libmcrypt libmcrypt-devel autoconf freetype gd jpegsrc libmcrypt libpng libpng-devel libjpeg libxml2 libxml2-devel zlib curl curl-devel openssl* libxml2 libxml2-devel openssl openssl-devel bzip2 bzip2-devel libcurl libcurl-devel libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel gmp gmp-devel libmcrypt libmcrypt-devel readline readline-devel libxslt libxslt-devel"
 res = os.system(cmd)
 if res != 0:
     print('yum命令缺失, 请检查')
