@@ -24,10 +24,6 @@ if os.getuid() == 0:
 else:
     print('当前用户不是root用户, 请以root用户执行脚本')
     sys.exit(1)
-question = raw_input("请您将所有脚本和文件移动到/root 目录下, 是否已经在/root 目录下? y/n\n")
-if question != 'y':
-    print('请将正常脚本和所有文件移到 /root 目录下执行')
-    exit(1)
 
 # yum源初始化
 cmd = "wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && rpm -ivh epel-release-latest-7.noarch.rpm && yum clean all && yum -y update"
