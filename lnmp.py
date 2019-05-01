@@ -6,9 +6,9 @@ import sys
 
 mongodbVersion = "mongodb-1.4.4"
 phpRedisVersion = "redis-4.0.2"
-phpVersion = "php-7.2.12"
+phpVersion = "php-7.3.4"
 phpSubVersion = "php-5.6.30"
-swooleVersion = "swoole-4.2.8"
+swooleVersion = "swoole-4.3.2"
 swooleSubVersion = "swoole-1.10.1"
 freetypeVersion = "freetype-2.9"
 inotifyVersion = "inotify-2.0.0"
