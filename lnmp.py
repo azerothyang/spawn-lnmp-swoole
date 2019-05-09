@@ -6,7 +6,7 @@ import sys
 
 mongodbVersion = "mongodb-1.4.4"
 phpRedisVersion = "redis-4.0.2"
-phpVersion = "php-7.3.4"
+phpVersion = "php-7.2.18"
 phpSubVersion = "php-5.6.30"
 swooleVersion = "swoole-4.3.2"
 swooleSubVersion = "swoole-1.10.1"
