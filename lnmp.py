@@ -112,7 +112,7 @@ else:
     cmd = 'cd ' + freetypeVersion + ' && ./configure --prefix=/usr/local/freetype/' + freetypeVersion + ' && make && make install'
     os.system(cmd)
     #安装gd 支持freetype
-    cmd = 'cd ' + version + '/ext/gd && /usr/local/' + version + '/bin/phpize && ./configure --with-php-config=/usr/local/' + version + '/bin/php-config --with-freetype-dir=/usr/local/freetype/' + freetypeVersion + ' && make && make install'
+    cmd = 'cd ' + version + '/ext/gd && /usr/local/' + version + '/bin/phpize && ./configure --with-php-config=/usr/local/' + version + '/bin/php-config --with-freetype-dir=/usr/local/freetype/' + freetypeVersion + ' --with-jpeg-dir --with-zlib-dir --with-gd && make && make install'
     res = os.system(cmd)
     # 安装php的gd扩展
     if res == 0:
