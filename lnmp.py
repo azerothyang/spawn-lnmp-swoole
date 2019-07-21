@@ -109,7 +109,7 @@ else:
     #首先下载安装freetype
     cmd = 'wget https://download.savannah.gnu.org/releases/freetype/' + freetypeVersion + '.tar.gz && tar -zxvf ' + freetypeVersion + '.tar.gz'
     os.system(cmd)
-    cmd = 'cd ' + freetypeVersion + ' && ./configure --prefix=/usr/local/freetype/ ' + freetypeVersion + ' && make && make install'
+    cmd = 'cd ' + freetypeVersion + ' && ./configure --prefix=/usr/local/freetype/' + freetypeVersion + ' && make && make install'
     os.system(cmd)
     #安装gd 支持freetype
     cmd = 'cd ' + version + '/ext/gd && /usr/local/' + version + '/bin/phpize && ./configure --with-php-config=/usr/local/' + version + '/bin/php-config --with-freetype-dir=/usr/local/freetype/' + freetypeVersion + ' && make && make install'
