@@ -8,7 +8,7 @@ mongodbVersion = "mongodb-1.4.4"
 phpRedisVersion = "redis-4.0.2"
 phpVersion = "php-7.2.18"
 phpSubVersion = "php-5.6.30"
-swooleVersion = "swoole-4.4.0"
+swooleVersion = "swoole-4.4.2"
 freetypeVersion = "freetype-2.9"
 inotifyVersion = "inotify-2.0.0"
 
