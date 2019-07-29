@@ -8,8 +8,7 @@ mongodbVersion = "mongodb-1.4.4"
 phpRedisVersion = "redis-4.0.2"
 phpVersion = "php-7.2.18"
 phpSubVersion = "php-5.6.30"
-swooleVersion = "swoole-4.3.2"
-swooleSubVersion = "swoole-1.10.1"
+swooleVersion = "swoole-4.4.0"
 freetypeVersion = "freetype-2.9"
 inotifyVersion = "inotify-2.0.0"
 
@@ -40,7 +39,7 @@ if res != 0:
 version = raw_input('请输入您想安装的php版本(' + phpVersion + '/' + phpSubVersion + ') \n')
 if version != phpSubVersion:
     version = phpVersion
-    url = 'http://cn2.php.net/distributions/' + phpVersion + '.tar.gz'
+    url = 'https://zero-world-public.oss-cn-hangzhou.aliyuncs.com/php/' + phpVersion + '.tar.gz'
 else:
     url = 'http://cn2.php.net/distributions/' + phpSubVersion + '.tar.gz'
 
@@ -107,7 +106,7 @@ if question == 'n':
     pass
 else:
     #首先下载安装freetype
-    cmd = 'wget https://download.savannah.gnu.org/releases/freetype/' + freetypeVersion + '.tar.gz && tar -zxvf ' + freetypeVersion + '.tar.gz'
+    cmd = 'wget https://zero-world-public.oss-cn-hangzhou.aliyuncs.com/php/' + freetypeVersion + '.tar.gz && tar -zxvf ' + freetypeVersion + '.tar.gz'
     os.system(cmd)
     cmd = 'cd ' + freetypeVersion + ' && ./configure --prefix=/usr/local/freetype/' + freetypeVersion + ' && make && make install'
     os.system(cmd)
@@ -202,12 +201,10 @@ if question == 'n':
     cmd = 0
     pass
 else:
-    swVerion = raw_input('请选择需要安装的swoole版本, (' + swooleVersion + '/' + swooleSubVersion + ') \n')
-    if swVerion != swooleSubVersion:
-        swVerion = swooleVersion
-    cmd = 'wget http://pecl.php.net/get/' + swVerion + '.tgz'
+    swVerion = swooleVersion
+    cmd = 'wget https://zero-world-public.oss-cn-hangzhou.aliyuncs.com/php/' + swVerion + '.tgz'
     os.system(cmd)
-    res = os.system('tar -zxvf ' + swVerion + '.tgz && cd ' + swVerion + ' && /usr/local/' + version + '/bin/phpize && ./configure --enable-sockets --enable-openssl --enable-mysqlnd --enable-async-mysql'
+    res = os.system('tar -zxvf ' + swVerion + '.tgz && cd ' + swVerion + ' && /usr/local/' + version + '/bin/phpize && ./configure  --enable-http2 --enable-sockets --enable-mysqlnd'
                     ' --with-php-config=/usr/local/' + version + '/bin/php-config && make && make install')
 
     # 启动php的swoole扩展
@@ -263,21 +260,21 @@ if cmd != 0:
         print('php-inotify扩展安装失败')
 # inotify
 
-question = raw_input('是否需要为您打开opcache? 请填写 y/n \n')
-if question == 'n':
-    cmd = 0
-    pass
-else:
-    cmd = 1
-if cmd != 0:
-    # 启动php的mongodb扩展
-    document = open('/usr/local/' + version + '/etc/php.ini', 'a')
-    document.write('zend_extension=opcache.so\n'
-                   'opcache.enable=1\n'
-                   'opcache.enable_cli=1\n'
-                   '\n')
-    document.close()
-    print('opcache打开完成')
+# question = raw_input('是否需要为您打开opcache? 请填写 y/n \n')
+# if question == 'n':
+#     cmd = 0
+#     pass
+# else:
+#     cmd = 1
+# if cmd != 0:
+#     # 启动php的mongodb扩展
+#     document = open('/usr/local/' + version + '/etc/php.ini', 'a')
+#     document.write('zend_extension=opcache.so\n'
+#                    'opcache.enable=1\n'
+#                    'opcache.enable_cli=1\n'
+#                    '\n')
+#     document.close()
+#     print('opcache打开完成')
 
 # 安装nginx
 question = raw_input('是否需要为您安装nginx? 请填写 y/n \n')
