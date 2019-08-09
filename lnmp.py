@@ -11,6 +11,7 @@ phpSubVersion = "php-5.6.30"
 swooleVersion = "swoole-4.4.2"
 freetypeVersion = "freetype-2.9"
 inotifyVersion = "inotify-2.0.0"
+msgpackVersion = "msgpack-2.0.3"
 
 #目前phpmemcache 没有加Simple Authentication and Security Layer
 phpMemcached = "memcached-3.0.4.tgz"
@@ -144,7 +145,27 @@ if cmd != 0:
         print('php-redis扩展安装失败')
 
 
-
+# msgpack
+if question == 'n':
+    cmd = 0
+    pass
+else:
+    cmd = 'wget http://pecl.php.net/get/' + msgpackVersion + '.tgz'
+if cmd != 0:
+    os.system(cmd)
+    os.system('tar -zxvf ' + msgpackVersion + '.tgz')
+    os.system('cd ' + msgpackVersion + ' && /usr/local/' + version + '/bin/phpize')
+    res = os.system('cd ' + msgpackVersion + ' && ./configure --with-php-config=/usr/local/' + version + '/bin/php-config && make && make install')
+    # 启动php的redis扩展
+    if res == 0:
+        document = open('/usr/local/' + version + '/etc/php.ini', 'a')
+        document.write('extension=msgpack.so\n')
+        document.close()
+        print('msgpack扩展安装成功')
+    else:
+        print('msgpack扩展安装失败')
+        
+        
 # memcached
 question = raw_input('是否需要为您安装memcached? 请填写 y/n \n')
 if question == 'n':
