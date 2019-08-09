@@ -101,35 +101,27 @@ else:
 # 安装php各项扩展
 
 # gd
-question = raw_input('是否需要为您安装gd扩展? 请填写 y/n \n')
-if question == 'n':
-    cmd = 0
-    pass
+print('安装gd扩展\n')
+#首先下载安装freetype
+cmd = 'wget https://zero-world-public.oss-cn-hangzhou.aliyuncs.com/php/' + freetypeVersion + '.tar.gz && tar -zxvf ' + freetypeVersion + '.tar.gz'
+os.system(cmd)
+cmd = 'cd ' + freetypeVersion + ' && ./configure --prefix=/usr/local/freetype/' + freetypeVersion + ' && make && make install'
+os.system(cmd)
+#安装gd 支持freetype
+cmd = 'cd ' + version + '/ext/gd && /usr/local/' + version + '/bin/phpize && ./configure --with-php-config=/usr/local/' + version + '/bin/php-config --with-freetype-dir=/usr/local/freetype/' + freetypeVersion + ' --with-jpeg-dir --with-zlib-dir --with-gd && make && make install'
+res = os.system(cmd)
+# 安装php的gd扩展
+if res == 0:
+    document = open('/usr/local/' + version + '/etc/php.ini', 'a')
+    document.write('extension=gd.so\n')
+    document.close()
+    print('gd扩展安装成功')
 else:
-    #首先下载安装freetype
-    cmd = 'wget https://zero-world-public.oss-cn-hangzhou.aliyuncs.com/php/' + freetypeVersion + '.tar.gz && tar -zxvf ' + freetypeVersion + '.tar.gz'
-    os.system(cmd)
-    cmd = 'cd ' + freetypeVersion + ' && ./configure --prefix=/usr/local/freetype/' + freetypeVersion + ' && make && make install'
-    os.system(cmd)
-    #安装gd 支持freetype
-    cmd = 'cd ' + version + '/ext/gd && /usr/local/' + version + '/bin/phpize && ./configure --with-php-config=/usr/local/' + version + '/bin/php-config --with-freetype-dir=/usr/local/freetype/' + freetypeVersion + ' --with-jpeg-dir --with-zlib-dir --with-gd && make && make install'
-    res = os.system(cmd)
-    # 安装php的gd扩展
-    if res == 0:
-        document = open('/usr/local/' + version + '/etc/php.ini', 'a')
-        document.write('extension=gd.so\n')
-        document.close()
-        print('gd扩展安装成功')
-    else:
-        print('gd扩展安装失败')
+    print('gd扩展安装失败')
 
 # redis
-question = raw_input('是否需要为您安装php-redis扩展? 请填写 y/n \n')
-if question == 'n':
-    cmd = 0
-    pass
-else:
-    cmd = 'wget http://pecl.php.net/get/' + phpRedisVersion + '.tgz'
+print('安装php-redis扩展\n')
+cmd = 'wget http://pecl.php.net/get/' + phpRedisVersion + '.tgz'
 if cmd != 0:
     os.system(cmd)
     os.system('tar -zxvf ' + phpRedisVersion + '.tgz')
@@ -146,11 +138,7 @@ if cmd != 0:
 
 
 # msgpack
-if question == 'n':
-    cmd = 0
-    pass
-else:
-    cmd = 'wget http://pecl.php.net/get/' + msgpackVersion + '.tgz'
+cmd = 'wget http://pecl.php.net/get/' + msgpackVersion + '.tgz'
 if cmd != 0:
     os.system(cmd)
     os.system('tar -zxvf ' + msgpackVersion + '.tgz')
@@ -217,33 +205,25 @@ else:
 
 
 # swoole
-question = raw_input('是否需要为您安装swoole扩展? 请填写 y/n \n')
-if question == 'n':
-    cmd = 0
-    pass
-else:
-    swVerion = swooleVersion
-    cmd = 'wget https://zero-world-public.oss-cn-hangzhou.aliyuncs.com/php/' + swVerion + '.tgz'
-    os.system(cmd)
-    res = os.system('tar -zxvf ' + swVerion + '.tgz && cd ' + swVerion + ' && /usr/local/' + version + '/bin/phpize && ./configure  --enable-http2 --enable-sockets --enable-mysqlnd'
-                    ' --with-php-config=/usr/local/' + version + '/bin/php-config && make && make install')
+print('安装swoole扩展\n')
+swVerion = swooleVersion
+cmd = 'wget https://zero-world-public.oss-cn-hangzhou.aliyuncs.com/php/' + swVerion + '.tgz'
+os.system(cmd)
+res = os.system('tar -zxvf ' + swVerion + '.tgz && cd ' + swVerion + ' && /usr/local/' + version + '/bin/phpize && ./configure  --enable-http2 --enable-sockets --enable-mysqlnd'
+                ' --with-php-config=/usr/local/' + version + '/bin/php-config && make && make install')
 
-    # 启动php的swoole扩展
-    if res == 0:
-        document = open('/usr/local/' + version + '/etc/php.ini', 'a')
-        document.write('extension=swoole.so\n')
-        document.close()
-        print('swoole扩展安装成功')
-    else:
-        print('swoole扩展安装失败')
+# 启动php的swoole扩展
+if res == 0:
+    document = open('/usr/local/' + version + '/etc/php.ini', 'a')
+    document.write('extension=swoole.so\n')
+    document.close()
+    print('swoole扩展安装成功')
+else:
+    print('swoole扩展安装失败')
 
 # mongodb
-question = raw_input('是否需要为您安装php-mongodb扩展? 请填写 y/n \n')
-if question == 'n':
-    cmd = 0
-    pass
-else:
-    cmd = 'wget http://pecl.php.net/get/' + mongodbVersion + '.tgz'
+print('安装php-mongodb扩展)
+cmd = 'wget http://pecl.php.net/get/' + mongodbVersion + '.tgz'
 if cmd != 0:
     os.system(cmd)
     os.system('tar -zxvf ' + mongodbVersion + '.tgz')
