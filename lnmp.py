@@ -209,7 +209,7 @@ print('安装swoole扩展\n')
 swVerion = swooleVersion
 cmd = 'wget https://zero-world-public.oss-cn-hangzhou.aliyuncs.com/php/' + swVerion + '.tgz'
 os.system(cmd)
-res = os.system('tar -zxvf ' + swVerion + '.tgz && cd ' + swVerion + ' && /usr/local/' + version + '/bin/phpize && ./configure  --enable-http2 --enable-sockets --enable-mysqlnd'
+res = os.system('tar -zxvf ' + swVerion + '.tgz && cd ' + swVerion + ' && /usr/local/' + version + '/bin/phpize && ./configure --enable-openssl --enable-http2 --enable-sockets --enable-mysqlnd'
                 ' --with-php-config=/usr/local/' + version + '/bin/php-config && make && make install')
 
 # 启动php的swoole扩展
