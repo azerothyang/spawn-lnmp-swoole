@@ -6,7 +6,7 @@ import sys
 
 mongodbVersion = "mongodb-1.4.4"
 phpRedisVersion = "redis-4.0.2"
-phpVersion = "php-7.2.18"
+phpVersion = "php-7.2.34"
 phpSubVersion = "php-5.6.30"
 swooleVersion = "swoole-4.4.2"
 freetypeVersion = "freetype-2.9"
@@ -97,7 +97,7 @@ else:
         print('php-fpm启动失败')
     else:
         print('php-fpm启动成功')
-        
+
 # 安装php各项扩展
 
 # gd
@@ -152,8 +152,8 @@ if cmd != 0:
         print('msgpack扩展安装成功')
     else:
         print('msgpack扩展安装失败')
-        
-        
+
+
 # memcached
 question = raw_input('是否需要为您安装memcached? 请填写 y/n \n')
 if question == 'n':
