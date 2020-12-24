@@ -222,7 +222,7 @@ else:
     print('swoole扩展安装失败')
 
 # mongodb
-print('安装php-mongodb扩展)
+print('安装php-mongodb扩展')
 cmd = 'wget http://pecl.php.net/get/' + mongodbVersion + '.tgz'
 if cmd != 0:
     os.system(cmd)
